@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "Surveys API Collection",
+    "description": "Postman collection for the Surveys API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "health"]
+        },
+        "description": "Check if the API is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Surveys",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/surveys",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "surveys"]
+        },
+        "description": "Retrieve all surveys"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Survey by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/surveys/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "surveys", "1"]
+        },
+        "description": "Retrieve a specific survey by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Survey",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"survey\": {\n    \"user_id\": 1,\n    \"title\": \"Customer Satisfaction Survey\",\n    \"description\": \"A survey to measure customer satisfaction with our services\",\n    \"status\": \"draft\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/surveys",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "surveys"]
+        },
+        "description": "Create a new survey"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Survey",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"survey\": {\n    \"title\": \"Updated Customer Satisfaction Survey\",\n    \"description\": \"Updated description for the customer satisfaction survey\",\n    \"status\": \"published\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/surveys/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "surveys", "1"]
+        },
+        "description": "Update an existing survey"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Survey",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v1/surveys/1",
+          "host": ["{{base_url}}"],
+          "path": ["api", "v1", "surveys", "1"]
+        },
+        "description": "Delete a survey"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

@@ -24,6 +24,7 @@ Bu projede kullanılan teknolojiler:
 - **SQLite3** (Veritabanı)
 - **BCrypt** (Şifre Güvenliği)
 - **Puma** (Web Server)
+- **Rack CORS** (Cross-Origin Resource Sharing - Frontend entegrasyonu için)
 
 ---
 
@@ -277,3 +278,57 @@ Bu proje eğitim amaçlı geliştirilmiştir.
 ---
 
 **Not**: Üretim ortamına almadan önce PostgreSQL gibi bir veritabanına geçiş yapılması ve authentication/authorization sistemi eklenmesi önerilir.
+
+---
+
+## 🌐 CORS (Cross-Origin Resource Sharing) Yapılandırması
+
+Bu API, frontend uygulamalardan gelen istekleri kabul etmek için CORS yapılandırmasına sahiptir.
+
+### Development Ortamı
+
+CORS ayarları `config/initializers/cors.rb` dosyasında yapılmıştır:
+
+```ruby
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "*"  # Development'ta tüm origin'lere izin ver
+    
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+end
+```
+
+### Production Ortamı
+
+Production'da güvenlik için sadece kendi domain'inize izin verin:
+
+```ruby
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins "https://yourdomain.com"  # Sadece kendi domain'iniz
+    
+    resource "*",
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+end
+```
+
+### Frontend Entegrasyonu
+
+Frontend projenizden API'ye erişmek için:
+
+```javascript
+// API base URL
+const API_BASE_URL = 'http://localhost:3000';
+
+// Örnek fetch çağrısı
+fetch(`${API_BASE_URL}/api/v1/surveys`)
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+
+**Önemli:** Rails sunucusunu CORS değişikliklerinden sonra yeniden başlatmayı unutmayın!
