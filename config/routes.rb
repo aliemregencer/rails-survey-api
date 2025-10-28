@@ -7,9 +7,17 @@ Rails.application.routes.draw do
     get "health", to: "health#index"
     
     namespace :v1 do
-      resources :surveys
-      resources :questions, only: [:index, :show]
-      resources :responses, only: [:create, :index]
+      resources :surveys do
+        member do
+          put :publish
+          put :unpublish
+          put :pause
+          put :archive
+        end
+        resources :questions, only: [:index, :create], controller: "api/v1/questions"
+        resources :responses, only: [:create], controller: "api/v1/responses"
+      end
+      resources :questions, only: [:update, :destroy]
     end
   end
 
