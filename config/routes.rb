@@ -7,6 +7,11 @@ Rails.application.routes.draw do
     get "health", to: "health#index"
     
     namespace :v1 do
+      # Authentication routes
+      post "login", to: "sessions#create"
+      post "signup", to: "users#create"
+      
+      # Protected routes
       resources :surveys do
         member do
           put :publish

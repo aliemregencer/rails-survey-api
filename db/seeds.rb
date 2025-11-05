@@ -6,17 +6,17 @@ puts "🌱 Seed verisi oluşturuluyor..."
 
 # 1. Kullanıcı Oluşturma
 puts "👤 Kullanıcılar oluşturuluyor..."
-admin = User.find_or_create_by!(email: 'admin@anket.com') do |user|
-  user.password = 'password'
-  user.password_confirmation = 'password'
+admin = User.find_or_create_by!(email: 'admin@test.com') do |user|
+  user.password = 'testpassword'
+  user.password_confirmation = 'testpassword'
 end
-puts "  ✓ Admin kullanıcı oluşturuldu: #{admin.email}"
+puts "  ✓ Admin kullanıcı oluşturuldu: #{admin.email} (Password: testpassword)"
 
-normal_user = User.find_or_create_by!(email: 'user@anket.com') do |user|
-  user.password = 'password'
-  user.password_confirmation = 'password'
+normal_user = User.find_or_create_by!(email: 'user@test.com') do |user|
+  user.password = 'testpassword'
+  user.password_confirmation = 'testpassword'
 end
-puts "  ✓ Normal kullanıcı oluşturuldu: #{normal_user.email}"
+puts "  ✓ Normal kullanıcı oluşturuldu: #{normal_user.email} (Password: testpassword)"
 
 # 2. Anket Oluşturma
 puts "\n📋 Anketler oluşturuluyor..."
@@ -85,38 +85,19 @@ soru3 = Question.find_or_create_by!(
 end
 puts "  ✓ Soru 3 (Serbest Metin): #{soru3.text}"
 
-# 4. Yanıt Oluşturma
-puts "\n💬 Kullanıcı yanıtları oluşturuluyor..."
-
-# Likert sorusuna yanıt
-response1 = Response.find_or_create_by!(
-  user: normal_user,
+# Soru 4: Başka bir soru örneği
+soru4 = Question.find_or_create_by!(
   survey: memnuniyet_anketi,
-  question: soru1
-) do |response|
-  response.answer_value = '5'
+  text: 'Bizi tekrar tercih eder misiniz?'
+) do |question|
+  question.question_type = :multiple_choice
 end
-puts "  ✓ Yanıt 1: Likert sorusuna '5' yanıtı verildi"
+puts "  ✓ Soru 4 (Çoktan Seçmeli): #{soru4.text}"
 
-# Çoktan seçmeli soruya yanıt
-response2 = Response.find_or_create_by!(
-  user: normal_user,
-  survey: memnuniyet_anketi,
-  question: soru2
-) do |response|
-  response.answer_value = 'B'
-end
-puts "  ✓ Yanıt 2: Çoktan seçmeli soruya 'B' (Tasarım) yanıtı verildi"
-
-# Serbest metin sorusuna yanıt
-response3 = Response.find_or_create_by!(
-  user: normal_user,
-  survey: memnuniyet_anketi,
-  question: soru3
-) do |response|
-  response.answer_value = 'Harika bir deneyimdi.'
-end
-puts "  ✓ Yanıt 3: Serbest metin sorusuna yanıt verildi"
+# 4. Yanıt Oluşturma (atlanıyor - Response model şu an mevcut API ile uyumlu değil)
+# Not: Response model'de question_id var, ama controller answers kullanıyor
+# API'de yanıt vermek için POST /api/v1/surveys/:survey_id/responses endpoint'ini kullanın
+puts "\n💬 Yanıt oluşturma atlandı (API ile uyumlu değil)"
 
 puts "\n✅ Seed verisi başarıyla oluşturuldu!"
 puts "\n📊 Özet:"

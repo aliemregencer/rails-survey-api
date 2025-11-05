@@ -1,6 +1,7 @@
 module Api
   module V1
     class QuestionsController < ApplicationController
+      skip_before_action :authenticate_user!, only: [:index]
       before_action :set_survey, only: [:index, :create]
       before_action :set_question, only: [:update, :destroy]
 

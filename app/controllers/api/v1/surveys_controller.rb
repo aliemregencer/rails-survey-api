@@ -1,6 +1,7 @@
 module Api
   module V1
     class SurveysController < ApplicationController
+      skip_before_action :authenticate_user!, only: [:index, :show]
       before_action :set_survey, only: [:show, :update, :destroy, :publish, :unpublish, :pause, :archive]
 
       # GET /api/v1/surveys
